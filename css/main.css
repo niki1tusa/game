@@ -1,0 +1,76 @@
+*{ 
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+#canvasId{
+    /* position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+     background-color: black;  /* ??? */
+    border-radius: 10px;
+    
+}
+
+
+
+.container{
+    position: relative;
+    display: inline-block;
+}
+
+.containerLess{
+    position:absolute;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 15px;
+}
+.playerHp{
+    background-color: green;
+    height: 30px;
+    width: 100%;
+}
+.playerHpMain{
+    position: absolute; 
+    background-color: blue;
+                     top: 0;
+                     width: 100%;
+                     bottom: 0;
+                     right: 0;
+}
+.timer{
+background-color: gray;
+width: 100px;
+height: 100px;
+flex-shrink: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.enemyHP{
+    background-color: green;
+    height: 30px;
+    width: 100%;  
+}
+.enemyHpMain{
+position: absolute; 
+background-color: blue;
+                 top: 0;
+                 left: 0;
+                 bottom: 0;
+                 right: 0;
+}
+
+.textInCenterGame{
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* display: flex; */
+    /* align-items: center;
+    justify-content: center; */
+    color: #fff;
+display: none;
+}
