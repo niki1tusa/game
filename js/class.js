@@ -1,50 +1,85 @@
 class Sprite {
-    constructor({position, imgSrc}){
+    constructor({position, imageSrc, scale = 1, frame = 1}){
         this.position = position
         this.width = 50
         this.height = 150
-        this.img = new Image()
-        this.img.src = imgSrc
+        this.image = new Image() 
+        this.image.src = imageSrc
+        this.scale = scale
+        this.frame = frame
+
     }
     draw(){
-        ctx.drawImage(this.img, this.position.x, this.position.y)
+   ctx.drawImage(
+            this.image, 
+            this.currFrame * (this.image.width / this.frame),
+            0,
+            this.image.width / this.frame,
+            this.image.height,
+            this.position.x, 
+            this.position.y, 
+            (this.image.width / this.frame) * this.scale,
+            this.image.height * this.scale  
+
+        ) 
     }
     update(){
         this.draw()
+        
+        // animate in slow motion 
+        this.elapsFrame++
+        if(this.elapsFrame % this.holdFrame === 0){
+        if(this.currFrame < this.frame -1){
+            this.currFrame++
+        } else{
+            this.currFrame = 0
+        }}
+
     }
 }
 
 
 ///
-class Fighter {
-    constructor({position, velocity, color = 'red', offset}){
-        this.position = position
+class Fighter extends Sprite{ 
+    constructor({
+        position, 
+        velocity, 
+        color = 'red', 
+        offset, 
+        imageSrc, 
+        scale = 1, 
+        frame = 1
+    }){
+super({
+    position, 
+    imageSrc, 
+    scale, 
+    frame
+})
+    
         this.velocity = velocity
         this.width = 50
         this.height = 150
         this.lastKey 
         this.attackRec = {
-            position: {
+        position: {
                x: this.position.x,
                y: this.position.y
             },
-            offset,
-            width: 100,
-            height: 50,
-        }
+        offset,
+        width: 100,
+        height: 50,
+        }        
         this.color = color
         this.attacking
         this.health = 100
+        this.currFrame = 0
+        this.elapsFrame = 0
+        this.holdFrame = 5
+
+
     }
-    draw(){
-        ctx.fillStyle = this.color
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height) 
-       
-     if(this.attacking){ 
-        ctx.fillStyle = 'green'
-        ctx.fillRect(this.attackRec.position.x, this.attackRec.position.y, this.attackRec.width, this.attackRec.height)
-    }
-    }
+
     update(){
         this.draw()
         this.attackRec.position.x = this.position.x + this.attackRec.offset.x
@@ -53,9 +88,9 @@ class Fighter {
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y        
         
-        // this.velocity.y += gravity;
         
-        if (this.position.y + this.height + this.velocity.y >= canvas.height) {
+        
+        if (this.position.y + this.height + this.velocity.y >= canvas.height - 95) {
          this.velocity.y = 0
         } 
         else {

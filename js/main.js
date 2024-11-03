@@ -11,9 +11,17 @@ const background = new Sprite({
         x: 0,
         y: 0
     },
-    imgSrc: './img/background/background_layer_1.png'
+    imageSrc: './img/background/background.png'
 })
-
+const shop = new Sprite({
+    position: {
+        x: 700,
+        y: 225
+    },
+    imageSrc: './img/decorations/shop_anim.png',
+    scale: 2,
+    frame: 6
+})
 //
 const player = new Fighter({
 position: {
@@ -27,7 +35,9 @@ velocity: {
 offset: {
     x: 0,
     y: 0
-}  
+},
+imageSrc: './img/hero/Idle.png',
+frame: 10,
 })
 //
 const enemy = new Fighter({
@@ -67,42 +77,7 @@ const keys = {
         pressed: false
     }
 }
-// collision
-function recCollision({rec1, rec2}){
-    return (    rec1.attackRec.position.x + rec1.attackRec.width >= rec2.position.x &&
-        rec1.attackRec.position.x <= rec2.position.x + rec2.width &&
-        rec1.attackRec.position.y + rec1.attackRec.height >= rec2.position.y &&
-        rec1.attackRec.position.y <= rec2.position.y + rec2.height )
-}
-// condition winner
-function winner({player, enemy, timerId}){
-    clearTimeout(timerId)
-    document.querySelector('.textInCenterGame').style.display = 'flex'
-    if(player.health === enemy.health){
-    document.querySelector('.textInCenterGame').innerHTML = 'Tie' 
-}  else if(player.health > enemy.health){
-    document.querySelector('.textInCenterGame').innerHTML = 'Win player'
-}   else{
-    document.querySelector('.textInCenterGame').innerHTML = 'Win enemy'  
-}
-}
 
-
-
-// timer
-let store = 60
-let timerId;
-function countTimer(){
-timerId = setTimeout(countTimer, 1000)
-if(store > 0){
-    store--
-    document.querySelector('.timer').innerHTML = store
-}
-
-if(store === 0 ){
-    winner({player, enemy, timerId})
-}
-}
 countTimer()
 //
 function animate(){
@@ -111,6 +86,8 @@ function animate(){
     ctx.fillStyle = 'black'
     ctx.fillRect(0,0, canvas.width, canvas.heigt)
     ctx.clearRect(0,0,canvas.width, canvas.height)
+    background.update()
+    shop.update()
     player.update()
     enemy.update()
 
